@@ -1,2 +1,2 @@
 # sport-chirp-frontend
-Frontend to show data from Twitter API
+React Frontend to show data from Twitter API

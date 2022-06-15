@@ -1,5 +1,3 @@
-// new way based on new example (lots of cleanup happened too)
-
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
@@ -27,21 +25,7 @@ async function getTwitterData() {
 
 let outsideVar;
 
-// let tweetDataList = await populateGraphValues().slice();
 let tweetDataList = [];
-
-
-// please delete this:
-const someData = [
-  createData('00:00', 0),
-  createData('03:00', 300),
-  createData('06:00', 600),
-  createData('09:00', 800),
-  createData('12:00', 1500),
-  createData('15:00', 2000),
-  createData('18:00', 2400),
-  createData('21:00', 2400)
-];
 
 const moreData = [];
 moreData.push(createData(0, 1500));
@@ -58,9 +42,6 @@ for (let k = 0; k < 8; k++) {
   console.log('row: ' + k);
   console.log(moreData[k]);
 }
-
-
-// START BACK HERE: YOU NEED TO MAKE IT LIKE let twitterDataList = []; twitterDataList = await populateGraphValues();
 
 // let token, user_id;
 async function populateGraphValues() {
@@ -81,51 +62,22 @@ async function populateGraphValues() {
       console.log('tempObj: ');
       console.log(outsideVar.data[0]);
 
-      // var mylist = [];
-      // var obj = {};
-      // obj["01"] = mylist.label;
-      // obj["02"] = mylist.value;
-      // mylist.push(obj);
-
       // create an object to add to the list
       let tempObj = {};
-      // tempObj[0] = outsideVar.data[i]['start'];
-      // tempObj[1] = outsideVar.data[i]['tweet_count'];
-
-      // var unixtime = Date.parse("24-Nov-2009 17:57:35").getTime()/1000
-      // tempObj[outsideVar.data[i]['start']] = outsideVar.data[i]['tweet_count'];
-      // Date.parse(outsideVar.data[i]['start']).getTime()/1000
-      // START BACK HERE: CONVERT THIS TO UNIX TIME!!!!!!!!!!!!!!!
+      
       console.log('converted time: ');
       let tempVar = 1000;
-      // let seconds = outsideVar.data[i]['start'].getTime()/tempVar
-      // console.log(seconds);
 
       console.log('type of time: ');
       let startTimeUnix = new Date(outsideVar.data[i]['start']);
       console.log(typeof(startTimeUnix));
-
-      console.log('nasty datetime: ');
-      console.log(startTimeUnix);
-
       
       let shortDate = outsideVar.data[i]['start'].substring(5,10);
-      console.log('nasty datetime truncated: ');
-      console.log(shortDate);
-      console.log('type of shortDate: ');
-      console.log(typeof(shortDate));
 
-
-      console.log('print it again: ');
-      console.log(startTimeUnix.getTime()/1000);
-
-      // tempObj[Date.parse(outsideVar.data[i]['start']).getTime()/1000] = outsideVar.data[i]['tweet_count'];
-      // 754,736,700
-      // 54,736,820
       let timeKey = startTimeUnix.getTime()/1000 - 1654000000;
 
 
-      // just trying something: convert i to a time looking thing
+      // convert i to a time looking thing
       let tempTimeStr = i.toString() + ':00';
 
       // tempObj[i.toString()] = outsideVar.data[i]['tweet_count'];
@@ -135,18 +87,9 @@ async function populateGraphValues() {
       console.log(tempObj);
 
       twitterDataList.push(createData(shortDate,outsideVar.data[i]['tweet_count']));
-
-      // add the element to the data list
-      // twitterDataList.push(outsideVar.data[i]['start']);
-      // IT WAS HERE: twitterDataList.push(tempObj);
-
-      //console.log('twitterDataList after push: ');
-      //console.log(twitterDataList[i]);
     }
 
     return twitterDataList;
-
-
   }
 }
 
@@ -182,22 +125,6 @@ class LineChartComponent extends Component {
 
   componentDidMount() {
     const fetchData = async () => {
-      // // Commenting as getting error while fetching
-      // // But here you can have logic of fetching the data and
-      // //add listeners etc
-      // // let res = await fetch(
-      // //   "http://api.openweathermap.org/data/2.5/forecast?q=plovdiv&units=metric&appid=ca148f5dc67f12aafaa56d1878bb6db2#"
-      // // );
-      // // res = await res.json();
-
-      // //Here i'm using dummy promise to simulate the API call
-      // const promise = new Promise((res) => {
-      //   setTimeout(() => {
-      //     res(weatherData);
-      //   }, 500);
-      // });
-      // const res = await promise;
-
       // CALL THE API HERE
       let graphValues = await populateGraphValues();
 
@@ -214,9 +141,6 @@ class LineChartComponent extends Component {
   render() {
     const { chartData } = this.state;
 
-    // from the thing before
-    // const theme = useTheme();
-    
     return (
         <React.Fragment>
         <Title>Recent Fan Engagement</Title>
@@ -270,13 +194,6 @@ class LineChartComponent extends Component {
 
 export default function Chart() {
   const theme = useTheme();
-
-  let aVariable = 'This is a test!';
-
-  console.log('Is this real?');
-
-  console.log('some data: ');
-  console.log(data['18:00']);
 
   return (
     <LineChartComponent theme={theme} />

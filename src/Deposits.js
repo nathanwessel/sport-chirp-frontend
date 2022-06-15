@@ -28,7 +28,7 @@ async function populateTweetTotal() {
   let tweetAPIResponse = await getTwitterData();
 
   // get just the number
-  console.log('welcome to populateTweetTotal().');
+  console.log('inside populateTweetTotal(): ');
   console.log('tweetResponse: ');
   console.log(tweetAPIResponse.meta['total_tweet_count']);
 
@@ -36,10 +36,6 @@ async function populateTweetTotal() {
 
 
 }
-
-
-
-
 
 class DepositsComponent extends Component {
   state = {
@@ -54,8 +50,7 @@ class DepositsComponent extends Component {
       let retVal = await populateTweetTotal();
 
 
-      //After getting the data from the backend,
-      //format it as per how the LineChart is expecting
+      // source: https://stackoverflow.com/questions/68563235/how-to-display-chart-rechart-with-data-from-api-in-reactjs
       this.setState({
         tweetTotal: retVal
       });
@@ -86,15 +81,6 @@ class DepositsComponent extends Component {
     );
   }
 }
-
-
-
-
-
-
-
-
-
 
 export default function Deposits() {
 
